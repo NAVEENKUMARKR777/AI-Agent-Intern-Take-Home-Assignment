@@ -170,7 +170,7 @@ graph LR
     A[GET /] --> B[Main Page]
     C[POST /api/plan] --> D[Create Plan]
     E[GET /api/plans] --> F[List Plans]
-    G[GET /api/plans/{id}] --> H[Get Specific Plan]
+    G[GET /api/plans/<<id>>] --> H[Get Specific Plan]
     I[GET /history] --> J[History Page]
     K[GET /health] --> L[Health Check]
     M[GET /docs] --> N[API Documentation]
