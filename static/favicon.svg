@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#grad1)" stroke="#fff" stroke-width="1"/>
+  
+  <!-- AI Brain/Head -->
+  <circle cx="16" cy="12" r="6" fill="#fff" opacity="0.9"/>
+  
+  <!-- Circuit/Neural network pattern -->
+  <path d="M10 10 L14 14 M18 10 L14 14 M14 14 L14 18 M10 18 L14 18 M18 18 L14 18" 
+        stroke="#667eea" stroke-width="1.5" fill="none"/>
+  
+  <!-- Dots for neural nodes -->
+  <circle cx="10" cy="10" r="1.5" fill="#667eea"/>
+  <circle cx="14" cy="14" r="1.5" fill="#667eea"/>
+  <circle cx="18" cy="10" r="1.5" fill="#667eea"/>
+  <circle cx="10" cy="18" r="1.5" fill="#667eea"/>
+  <circle cx="18" cy="18" r="1.5" fill="#667eea"/>
+  <circle cx="14" cy="18" r="1.5" fill="#667eea"/>
+  
+  <!-- Planning/Calendar elements -->
+  <rect x="20" y="22" width="8" height="6" fill="#fff" opacity="0.8" rx="1"/>
+  <line x1="22" y1="24" x2="26" y2="24" stroke="#667eea" stroke-width="0.5"/>
+  <line x1="22" y1="25.5" x2="24" y2="25.5" stroke="#667eea" stroke-width="0.5"/>
+  <line x1="22" y1="27" x2="26" y2="27" stroke="#667eea" stroke-width="0.5"/>
+  
+  <!-- Checkmark for completed tasks -->
+  <path d="M4 22 L6 24 L10 20" stroke="#4CAF50" stroke-width="2" fill="none"/>
+</svg>

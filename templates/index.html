@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Create Plan - AI Task Planning Agent{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <form id="goal-form">
+            <div class="mb-4">
+                <label for="goal" class="form-label fw-bold">
+                    <i class="fas fa-bullseye me-2"></i>What's your goal?
+                </label>
+                <textarea 
+                    class="form-control goal-input" 
+                    id="goal" 
+                    name="goal" 
+                    rows="3" 
+                    placeholder="e.g., Plan a 3-day trip to Jaipur with cultural highlights and good food"
+                    required
+                ></textarea>
+                <div class="form-text">
+                    Be as specific as possible. The AI will create a detailed, day-by-day plan for you.
+                </div>
+            </div>
+            
+            <div class="text-center mb-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-magic me-2"></i>Create My Plan
+                </button>
+            </div>
+        </form>
+        
+        <!-- Loading indicator -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <h4>Creating your plan...</h4>
+            <p class="text-muted">Our AI agent is gathering information and structuring your goal into actionable steps.</p>
+        </div>
+        
+        <!-- Plan result -->
+        <div id="plan-result" class="plan-card" style="display: none;">
+            <div class="plan-header">
+                <h3 class="mb-0">
+                    <i class="fas fa-map-marked-alt me-2"></i>
+                    <span id="plan-goal"></span>
+                </h3>
+                <small id="plan-date"></small>
+            </div>
+            <div class="plan-content" id="plan-content"></div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="text-center mt-4">
+            <a href="/history" class="btn btn-outline-primary">
+                <i class="fas fa-history me-2"></i>View All Plans
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('goal-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const goal = document.getElementById('goal').value.trim();
+    if (!goal) return;
+    
+    showLoading();
+    
+    try {
+        const response = await fetch('/api/plan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ goal: goal })
+        });
+        
+        if (response.ok) {
+            const plan = await response.json();
+            showPlan(plan);
+            document.getElementById('goal').value = ''; // Clear form
+        } else {
+            const errorData = await response.json().catch(() => ({ detail: 'Unknown error occurred' }));
+            throw new Error(errorData.detail || 'Failed to create plan');
+        }
+    } catch (error) {
+        hideLoading();
+        
+        // Create error display
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-danger mt-3';
+        errorDiv.innerHTML = `
+            <h5><i class="fas fa-exclamation-triangle me-2"></i>Error Creating Plan</h5>
+            <p>${error.message}</p>
+            <small class="text-muted">Please check your API keys and try again.</small>
+        `;
+        
+        // Insert error after the form
+        const form = document.getElementById('goal-form');
+        form.parentNode.insertBefore(errorDiv, form.nextSibling);
+        
+        // Remove error after 10 seconds
+        setTimeout(() => {
+            if (errorDiv.parentNode) {
+                errorDiv.parentNode.removeChild(errorDiv);
+            }
+        }, 10000);
+    }
+});
+</script>
+{% endblock %}
